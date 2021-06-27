@@ -1,0 +1,4 @@
+hfst
+bs4
+keepfresh
+dataclasses
