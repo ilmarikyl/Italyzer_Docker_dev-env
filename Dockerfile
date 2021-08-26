@@ -1,13 +1,14 @@
-FROM python:3.6.13-buster
+FROM python:3.6-slim
 
 WORKDIR /usr/src/app
 
 COPY . .
 
-RUN pip install --upgrade pip
+RUN apt-get update && \
+    pip install --upgrade pip && \
+    pip install --trusted-host pypi.python.org -r requirements.txt && \
+	useradd -m appuser
 
-RUN pip install --trusted-host pypi.python.org -r requirements.txt
+USER appuser
 
-RUN apt-get install tk
-
-CMD ["keepfresh", "auto-restart" ,"-x", "py", "-c", "python", "textui_italyzer.py"]
+CMD ["keepfresh", "auto-restart", "-x", "py", "-c", "python", "textui_italyzer.py"]
